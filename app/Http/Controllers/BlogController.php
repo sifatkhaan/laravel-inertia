@@ -51,7 +51,7 @@ class BlogController extends Controller
             'title' => $validatedData['title'],
             'image' => $validatedData['image'],
             'body'  => $validatedData['body'],
-        ]);
+        ])->with('message', "Successfully Created the data");
     }
 
  

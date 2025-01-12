@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Oleo+Script:wght@400;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,200..900;1,200..900&family=Oleo+Script:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Aclonica&family=Crimson+Pro:ital,wght@0,200..900;1,200..900&family=Noto+Serif:ital,wght@0,100..900;1,100..900&family=Oleo+Script:wght@400;700&display=swap');
 
 @import 'slick-carousel/slick/slick.css';
 @import 'slick-carousel/slick/slick-theme.css';
@@ -7,3 +8,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.slick-slide {
+  display: flex !important;
+  flex-direction: row !important; /* Adjust as needed */
+}
+  .test-color{
+    background-color: blueviolet;
+  }

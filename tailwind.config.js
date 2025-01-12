@@ -9,7 +9,9 @@ module.exports = {
     extend: {},
     fontFamily:{
       cursive:['Oleo Script','system-ui'],
-      crismo:['Crimson Pro','serif']
+      crismo:['Crimson Pro','serif'],
+      noto: ['"Noto Serif"', 'serif'],
+
     }
   },
   plugins: [],
