@@ -11,7 +11,7 @@ export default function Layout({ children }) {
     setIsMounted(true);
   }, []);
 
-  
+  console.log(window.screen.width, 'screen')
 
   const items = [
     {
