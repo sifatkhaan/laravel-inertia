@@ -16,7 +16,7 @@ export default function Layout({ children }) {
   const items = [
     {
       key: '1',
-      label: <a href="/water-color">Water Color</a>,
+      label: <a href="/water-color/1">Water Color</a>,
     },
     {
       key: '2',

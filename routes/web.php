@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -20,3 +21,4 @@ use Inertia\Inertia;
 Route::get('/', [BlogController::class, 'index']);
 Route::get('/blog-list', [BlogController::class, 'blogs'])->name('blogs.list');
 Route::resource('blogs', BlogController::class)->except('index');
+Route::get('/water-color/{id}', [CategoryController::class, 'index'])->name('categories.index');

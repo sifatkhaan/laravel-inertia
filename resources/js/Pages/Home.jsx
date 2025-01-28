@@ -43,6 +43,23 @@ function Home() {
     centerMode: true, // Center the slides
     centerPadding: "0px",
   };
+
+  const homeCategory = [
+    {
+      id:1,
+      itemName:'',
+      itemId:'',
+      categoryCode:1,
+      categroyName:'',
+      regularPrice:10,
+      discountPrice:8,
+      isSlider:true,
+      bgColor:'',
+      heading:'',
+      
+
+    }
+  ]
   return (
     <div className='w-full overflow-x-hidden'>
       <Head title={component} />
