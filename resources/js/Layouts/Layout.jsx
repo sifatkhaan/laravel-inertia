@@ -1,5 +1,5 @@
 
-import { Link } from '@inertiajs/react'
+import { Link, usePage } from '@inertiajs/react'
 import { Dropdown, Space } from 'antd';
 import React, { useEffect, useState } from 'react'
 import { FaChevronDown } from 'react-icons/fa';
@@ -11,59 +11,71 @@ export default function Layout({ children }) {
     setIsMounted(true);
   }, []);
 
-  console.log(window.screen.width, 'screen')
+  const {categories} = usePage().props
 
-  const items = [
-    {
-      key: '1',
-      label: <a href="/water-color/1">Water Color</a>,
-    },
-    {
-      key: '2',
-      label: <a href="/pen-sketch">Pen Sketch</a>,
-      children:[
-        {
-          key:'1',
-          label:'Portrait'
-        },
-        {
-          key:'2',
-          label:'Landscape',
-          children:[
-            {
-              key:'1',
-              label:'Black',
-              children:[
-                {
-                  key:'1',
-                  label:'Dark'
-                },
-                {
-                  key:'2',
-                  label:'Light'
-                },
-              ]
-            },
-            {
-              key:'2',
-              label:'Gray'
-            },
-          ]
-        }
-      ],
+  console.log(categories, 'categories')
+  console.log(window.screen.width, 'screen')
+  const items = categories.map((category) => ({
+    key: category.id,
+    label: <Link href={`/category/${category.id}`}>{category.name}</Link>,
+    children: category.sub_categories?.map((sub)=>({
+      key:sub.id,
+      label:<Link href={`/category/${category.id}?sub=${sub.id}`}>{sub.name}</Link>,
+    }))
+  }))
+
+
+  // const items = [
+  //   {
+  //     key: '1',
+  //     label: <a href="/water-color/1">Water Color</a>,
+  //   },
+  //   {
+  //     key: '2',
+  //     label: <a href="/pen-sketch">Pen Sketch</a>,
+  //     children:[
+  //       {
+  //         key:'1',
+  //         label:'Portrait'
+  //       },
+  //       {
+  //         key:'2',
+  //         label:'Landscape',
+  //         children:[
+  //           {
+  //             key:'1',
+  //             label:'Black',
+  //             children:[
+  //               {
+  //                 key:'1',
+  //                 label:'Dark'
+  //               },
+  //               {
+  //                 key:'2',
+  //                 label:'Light'
+  //               },
+  //             ]
+  //           },
+  //           {
+  //             key:'2',
+  //             label:'Gray'
+  //           },
+  //         ]
+  //       }
+  //     ],
      
-    },
-    {
-      key: '3',
-      label:  <a href="/acrilic">Acrilic</a>,
+  //   },
+  //   {
+  //     key: '3',
+  //     label:  <a href="/acrilic">Acrilic</a>,
    
-    },
-    {
-      key: '4',
-      label: <a href="/charcol">Charcol</a>,
+  //   },
+  //   {
+  //     key: '4',
+  //     label: <a href="/charcol">Charcol</a>,
       
-    },
-  ]
+  //   },
+  // ]
 
   return (
     <>

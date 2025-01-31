@@ -8,18 +8,28 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index($categoryId)
+    public function index(Request $request, $categoryId)
     {
         $category = category::with('items')->findOrFail($categoryId);
-        $items = Item::where('category_id', $categoryId)->latest()->paginate(4);
+        $query = Item::where('category_id', $categoryId);
+        
+        if ($request->has('subcategory_id')) {
+            $query->where('subcategory_id', $request->subcategory_id);
+        }
+        if ($request->has('isPortrait')) {
+            $query->where('is_portrait', $request->isPortrait);
+        }
+
+        if ($request->has('price_min') && $request->has('price_max')) {
+            $query->whereBetween('price', [$request->price_min, $request->price_max]);
+        }
+    
+        $items = $query->latest()->paginate(4);
+
         return inertia('Category', [
             'items' => $items,
             'category' => $category,
+            'filters' => $request->all(),
         ]);
     }
 

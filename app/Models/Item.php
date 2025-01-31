@@ -26,4 +26,12 @@ class Item extends Model
     {
         return $this->belongsTo(Category::class);
     }
+    public function media()
+    {
+        return $this->belongsTo(Media::class, 'media_id', 'id');
+    }
+    public function material()
+    {
+        return $this->belongsTo(Material::class, 'material_id', 'id');
+    }
 }

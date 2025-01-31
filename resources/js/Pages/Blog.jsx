@@ -19,7 +19,6 @@ export default function Blog({ blogs }) {
 
   return (
     <div className='w-full flex justify-center my-10'>
-     
       <div className="w-[80%] flex flex-wrap mb-6 gap-5">
         {blogs.data.map((blog, index) => (
           <div
@@ -42,7 +41,6 @@ export default function Blog({ blogs }) {
                 )}
               </div>
             </div>
-           
               <div className="w-full md:w-[45%] flex flex-col pt-10">
               <Link href={`/blogs/${blog.id}`}>
                 <img
@@ -50,12 +48,11 @@ export default function Blog({ blogs }) {
                   alt=""
                   className="w-full h-auto object-cover rounded-md"
                 />
-                  </Link>
+                </Link>
               </div>
-          
           </div>
         ))}
-
+        {/* pagination */}
         <div>
           {blogs.links.map(link => (
             link.url ? (
