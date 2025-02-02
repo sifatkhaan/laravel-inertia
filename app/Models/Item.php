@@ -34,4 +34,10 @@ class Item extends Model
     {
         return $this->belongsTo(Material::class, 'material_id', 'id');
     }
+    public function author(){
+        return $this->belongsTo(Author::class, 'author_id');
+    }
+    public function sale(){
+        return $this->hasMany(Sale::class);
+    }
 }
