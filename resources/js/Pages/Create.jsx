@@ -1,5 +1,7 @@
 import { useForm, usePage } from '@inertiajs/react'
 import React, { useState } from 'react'
+import { Input } from 'antd'
+const { TextArea } = Input;
 
 export default function Create() {
 
@@ -33,23 +35,27 @@ export default function Create() {
                             )}
                             <form onSubmit={onSubmit} className='block'>
                                 <div>
-                                    <input type="text"
+                                    <Input type="text"
                                         className='border border-gray-700'
                                         value={data.title}
                                         onChange={(e) => setData('title', e.target.value)}
+                                        placeholder='Enter Title'
                                     />
                                 </div>
                                 <div className='py-5'>
-                                    <input className='border border-gray-700' type="file"
+                                    <Input className='border border-gray-700' type="file"
                                         // value={data.image} 
                                         onChange={e => setData('image', e.target.files[0])}
                                     />
                                 </div>
-                                <div>
-                                    <textarea className='border border-gray-700' type="text"
+                                <div className='mb-5'>
+                                    <TextArea
+                                        className='border border-gray-700'
+                                        rows={4}
                                         value={data.body}
                                         onChange={(e) => setData('body', e.target.value)}
-                                    ></textarea>
+                                        placeholder='Enter Description'
+                                    />
                                 </div>
 
                                 <button type='submit' className='bg-green-500 px-4 py-1 text-white rounded-md' disabled={processing}>Save</button>
