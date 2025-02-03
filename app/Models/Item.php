@@ -40,4 +40,7 @@ class Item extends Model
     public function sale(){
         return $this->hasMany(Sale::class);
     }
+    public function itemStock(){
+        return $this->hasMany(ItemStock::class);
+    }
 }

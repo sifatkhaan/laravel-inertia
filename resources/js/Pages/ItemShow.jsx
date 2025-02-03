@@ -1,7 +1,12 @@
 import React from 'react'
 import { Button, Rate } from 'antd';
+import { router } from '@inertiajs/react';
 
 function ItemShow({ item }) {
+
+    const handleBuyNow = () => {
+        router.get(`/sell-item/${item.id}`);
+      };
 
     return (
         <div className='flex w-full justify-center '>
@@ -64,7 +69,7 @@ function ItemShow({ item }) {
                                 </div>
 
                                 <div className='py-8 flex w-full justify-center'>
-                                    <Button className='bg-lime-600 p-5 px-10 text-white font-bold font-crismo text-lg'>Buy Now</Button>
+                                    <Button className='bg-lime-600 p-5 px-10 text-white font-bold font-crismo text-lg' onClick={handleBuyNow}>Buy Now</Button>
                                 </div>
                                 <div className='flex w-full justify-center'>
                                     <Button className='bg-[#E75876] p-5 px-10 text-white font-bold font-crismo text-lg'>Order Now</Button>
@@ -126,7 +131,7 @@ function ItemShow({ item }) {
                                 </div>
 
                                 <div className='py-8 flex w-full justify-center'>
-                                    <Button className='bg-lime-600 p-5 px-10 text-white font-bold font-crismo text-lg'>Buy Now</Button>
+                                    <Button className='bg-lime-600 p-5 px-10 text-white font-bold font-crismo text-lg' onClick={handleBuyNow}>Buy Now</Button>
                                 </div>
                                 <div className='flex w-full justify-center'>
                                     <Button className='bg-[#E75876] p-5 px-10 text-white font-bold font-crismo text-lg'>Order Now</Button>
