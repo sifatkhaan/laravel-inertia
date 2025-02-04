@@ -6,8 +6,6 @@ export default function Category({ filters, items, category }) {
   const { categories } = usePage().props
   const currentCategoryId = window.location.pathname.split('/')[2];
 
-  console.log(categories, 'categories', currentCategoryId, 'id')
-
   return (
     <div className='w-full flex justify-center my-10'>
       

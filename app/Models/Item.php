@@ -38,7 +38,7 @@ class Item extends Model
         return $this->belongsTo(Author::class, 'author_id');
     }
     public function sale(){
-        return $this->hasMany(Sale::class);
+        return $this->hasMany(Sale::class, 'item_id');
     }
     public function itemStock(){
         return $this->hasMany(ItemStock::class);

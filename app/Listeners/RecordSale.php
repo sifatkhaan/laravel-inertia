@@ -31,6 +31,7 @@ class RecordSale
         Log::info('record Sale listner:', [
             'Sale' => $event->item->item->id,
             'total_price' => $event->total_price,
+            'author' => $event->author,
             
         ]);
 

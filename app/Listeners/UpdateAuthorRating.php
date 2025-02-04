@@ -3,6 +3,7 @@
 namespace App\Listeners;
 
 use App\Events\ItemSold;
+use App\Models\AuthorRating;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Log;
@@ -30,16 +31,29 @@ class UpdateAuthorRating
         
         $item = $event->item->item;
         $author = $item->author;
-        Log::info('Author Rating listner:', [
-            'author' => $author,
-            'total' => $item->sale()->sum('quantity'),
-            
-        ]);
+
+        if (!$author) {
+            Log::error('Author not found for item:', ['item_id' => $item->id]);
+            return;
+        }
+     
         
         if($author){
             $totalSales = $item->sale()->sum('quantity');
-            $newRating = min(5, max(1, $totalSales/100)); 
-            $author->update(['rating'=>$newRating]);
+            $newRating = min(5, max(1, $totalSales/10)); 
+            // $author->update(['rating'=>$newRating]);
+
+
+             AuthorRating::updateOrCreate(
+                ['author_id' => $author->id],  // 🔹 Search by author_id
+                ['rating' => $newRating]       // 🔹 Update rating
+            );
+            Log::info('Author Rating listner:', [
+              
+                'result' => $author,
+                'newRating' => $newRating,
+                
+            ]);
         }
     }
 }

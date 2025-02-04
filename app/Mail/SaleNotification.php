@@ -10,6 +10,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
 
 class SaleNotification extends Mailable
 {
@@ -23,9 +24,15 @@ class SaleNotification extends Mailable
      *
      * @return void
      */
-    public function __construct(ItemStock $item, $quantity)
+    public function __construct(Item $item, $quantity)
     {
-        $this->item = $item->item;
+
+        Log::info('Notification Constructor Data:', [
+            'Item' => $item,
+            'quantity' => $quantity,
+            
+        ]);
+        $this->item = $item;
         $this->quantity = $quantity;
     }
 
@@ -59,7 +66,7 @@ class SaleNotification extends Mailable
     public function content()
     {
         return new Content(
-            view: 'view.name',
+            view: 'emails.sale_notification',
         );
     }
 

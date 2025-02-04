@@ -2,7 +2,6 @@
 
 namespace App\Events;
 
-use App\Models\Item;
 use App\Models\ItemStock;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
@@ -18,6 +17,7 @@ class ItemSold
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $item;
+    public $author;
     public $quantity;
     public $total_price;
 
@@ -29,13 +29,8 @@ class ItemSold
     public function __construct(ItemStock $item, $quantity)
     {
 
-        Log::info('Event Constructor Data:', [
-            'event' => $item->item,
-            
-        ]);
-        // var_dump('item', $item);
-        // exit;
         $this->item = $item;
+        $this->author = $item->item->author;
         $this->quantity = $quantity;
         $this->total_price = $item->item->price;
         

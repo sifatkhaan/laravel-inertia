@@ -31,10 +31,10 @@ class SendSaleNotification
     {
 
         Log::info('Notification listner:', [
-            'author' => $event->item->item->author,
+            'author' => $event->author,
             
         ]);
-        $author = $event->item->item->author;
+        $author = $event->author;
         if($author && $author->email){
             Mail::to($author->email)->send(new SaleNotification($event->item->item, $event->quantity));
         }

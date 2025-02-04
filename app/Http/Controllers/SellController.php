@@ -17,19 +17,17 @@ class SellController extends Controller
             'quantity' => 'required|integer|min:1',
             'total_price' => 'required',
         ]);
-        // $item = Item::find($request->item_id);
+
         $itemStock = ItemStock::where('item_id', $request->item_id)->first();
-        // dd($item);
         if (!$itemStock || $itemStock->quantity < $request->quantity) {
             return response()->json(['error' => 'Not enough stock!'], 400);
         }
 
         DB::transaction(function () use ($itemStock, $request) {
             event(new ItemSold($itemStock, $request->quantity));
-            $itemStock->decrement('quantity', $request->quantity);
         });
 
-        return response()->json(['error' => 'Not enough stock!'], 400);
+        return response()->json(['message' => 'Item sold successfully!'], 200);
     }
 
     public function show(Item $item)
