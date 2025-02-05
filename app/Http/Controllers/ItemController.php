@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\category;
 use App\Models\Item;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ItemController extends Controller
 {
@@ -47,7 +48,7 @@ class ItemController extends Controller
     
     public function show(Item $item)
     {
-        $item->load(['category','material','media']);
+        $item->load(['category','material','media','author','author.authorRating', 'stock']);
         return inertia('ItemShow', ['item'=> $item]);
     }
 
