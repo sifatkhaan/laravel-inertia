@@ -85,7 +85,7 @@ function Home() {
           ))}
         </Slider>
       </div>
-      <div className='flex justify-center my-10 md:my-20'>
+      <div className='flex justify-center my-5 md:my-20'>
         <div className='w-full p-2 md:p-0 md:w-[80%]'>
           <div className="block md:flex text-xl gap-3 ">
             <div className="w-full md:w-[30%] overflow-hidden rounded-md hover:cursor-pointer relative my-2 md:my-0" >
@@ -136,11 +136,11 @@ function Home() {
         </div>
         <img src='/images/art/water-color/banner_sari.png' alt='banner' className="w-full object-cover overflow-hidden" />
       </div>
-      <div className='w-full grid grid-cols-4 gap-4 p-2 my-10 h-12 font-noto text-lg md:text-2xl text-gray-600'>
-        <div className=' border-r-2 border-gray-600'>Borno Bilas</div>
-        <div className=' border-r-2 border-gray-600'>My Account</div>
-        <div className=' border-r-2 border-gray-600'>Conttact Us</div>
-        <div>News Letter</div>
+      <div className='w-full grid grid-cols-4 gap-2 md:gap-4 p-2 my-5 md:my-10 h-12 font-noto text-base md:text-2xl text-gray-600'>
+        <div className='border-r-2 border-gray-600 '>Borno Bilas</div>
+        <div className=' border-r-2 border-gray-600 '>My Account</div>
+        <div className=' border-r-2 border-gray-600'>Contact Us</div>
+        <div className=''>News Letter</div>
       </div>
     </div>
   )

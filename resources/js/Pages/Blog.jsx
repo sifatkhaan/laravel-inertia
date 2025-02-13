@@ -18,12 +18,12 @@ export default function Blog({ blogs }) {
   }
 
   return (
-    <div className='w-full flex justify-center my-10'>
-      <div className="w-[80%] flex flex-wrap mb-6 gap-5">
+    <div className='w-full flex justify-center my-5 md:my-10 px-2'>
+      <div className="w-full md:w-[80%] flex flex-wrap mb-2 md:mb-5 gap-5">
         {blogs.data.map((blog, index) => (
           <div
             key={blog.id}
-            className={`w-full flex ${index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'} flex-wrap mb-6 gap-5 justify-between`}
+            className={`w-full flex ${index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'} flex-wrap mb-0 md:mb-6 gap-5 justify-between`}
           >
             <div className="flex flex-col justify-start w-full md:w-[50%]">
               <h1 className="text-3xl font-crismo font-bold">{blog.title}</h1>
@@ -41,7 +41,7 @@ export default function Blog({ blogs }) {
                 )}
               </div>
             </div>
-              <div className="w-full md:w-[45%] flex flex-col pt-10">
+              <div className="w-full md:w-[45%] flex flex-col pt-0 md:pt-10">
               <Link href={`/blogs/${blog.id}`}>
                 <img
                   src={`/storage/${blog.image}`}

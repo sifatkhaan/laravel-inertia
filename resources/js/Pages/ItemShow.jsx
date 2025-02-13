@@ -21,9 +21,9 @@ function ItemShow({ item }) {
 
     return (
         <div className='flex w-full justify-center '>
-            <div className='w-[80%] bg-[#fff6f6e6]'>
+            <div className='w-full md:w-[80%] bg-[#fff6f6e6] px-2'>
                 {item?.is_portrait ? (
-                    <div className='flex w-full gap-4'>
+                    <div className='block md:flex w-full gap-4'>
                         <div className="w-[60%] px-2 py-5 ">
                             <img
                                 src={item.image}
@@ -89,15 +89,15 @@ function ItemShow({ item }) {
                         </div>
                     </div>
                 ) : (
-                    <div className='flex gap-4 items-start'>
-                        <div className="flex w-[70%] py-5 px-2">
+                    <div className='md:flex gap-4 items-start'>
+                        <div className="flex w-full md:w-[70%] py-2 md:py-5 md:px-2">
                             <img
                                 src={item.image}
                                 alt=""
                                 className=" object-cover rounded-md"
                             />
                         </div>
-                        <div className='py-5 text-gray-700 w-[25%]'>
+                        <div className='py-2 md:py-5 text-gray-700 md:w-[25%]'>
                             <h1 className='text-2xl font-bold font-noto pb-2'>{item?.name}</h1>
                             <div className='border-y-2 py-2 font-crismo text-lg px-4'>
                                 <div className='py-2'>
@@ -141,12 +141,12 @@ function ItemShow({ item }) {
                                     <span className='text-green-600'>In stock</span>
                                 </div>
 
-                                <div className='py-8 flex w-full justify-center'>
+                                <div className='py-4 md:py-8 flex w-full justify-center'>
                                     <Button className='bg-lime-600 p-5 px-10 text-white font-bold font-crismo text-lg' onClick={handleBuyNow}>Buy Now</Button>
                                 </div>
-                                <div className='flex w-full justify-center'>
+                                {/* <div className='flex w-full justify-center'>
                                     <Button className='bg-[#E75876] p-5 px-10 text-white font-bold font-crismo text-lg'>Order Now</Button>
-                                </div>
+                                </div> */}
                             </div>
                             <div className='border-y-2 py-3'>
                                 <span className='font-bold'>Call for Order : +8801515249342</span>
@@ -155,7 +155,7 @@ function ItemShow({ item }) {
                     </div>
                 )}
 
-                <div className='py-5 text-gray-700 px-2'>
+                <div className='py-2 md:py-5 text-gray-700 px-2'>
                     <div className='flex gap-5 border-b-4 font-bold text-gray-400'>
                         <button className={`my-2 border-b-2 ${state.activeTab === "description" ? "border-green-500 text-gray-700" : "border-transparent hover:text-gray-700"
                             }`} onClick={() => dispatch({ type: "SET_TAB", payload: "description" })}>Description</button>
@@ -165,7 +165,7 @@ function ItemShow({ item }) {
                             }`} onClick={() => dispatch({ type: "SET_TAB", payload: "video" })}>Video</button>
                     </div>
                     {state.activeTab === "author" ? (
-                        <div className='flex items-start gap-5 my-3 py-2'>
+                        <div className='w-full flex items-start gap-3 md:gap-5 my-3 py-2'>
                             <div>
                                 <img
                                     src={item.author.image}
@@ -173,7 +173,7 @@ function ItemShow({ item }) {
                                     className="w-32 object-cover rounded-sm"
                                 />
                             </div>
-                            <div className='my-3 py-5'>
+                            <div className='md:my-3 md:py-5'>
                                 <p>Name: {item?.author.name}</p>
                                 <p>Rating: {item?.author?.author_rating?.rating}</p>
                                 <p>Email: {item?.author.email}</p>
@@ -190,7 +190,7 @@ function ItemShow({ item }) {
                                         Your browser does not support the video tag.
                                     </video>
                                 ) : (
-                                    <div className='w-1/2 h-28 bg-white flex items-center justify-center'>
+                                    <div className='w-full md:w-1/2 h-auto md:h-28 bg-white flex items-center justify-center'>
                                         <h2 className='font-semibold text-2xl text-gray-800 p-5'>
                                        OOps!! No Video Available!!
                                     </h2>
@@ -201,7 +201,7 @@ function ItemShow({ item }) {
                         </div>
                     ) : (
                         <div>
-                           <div className='w-[40%] py-5 text-gray-700 '>
+                           <div className='w-full md:w-[40%] py-5 text-gray-700 '>
                         
                             <div className=' py-2 font-crismo text-lg px-5'>
                                 <div className='py-2'>

@@ -31,60 +31,7 @@ export default function Layout({ children }) {
       label: <Link href={`/category/${category.id}?sub=${sub.id}`}>{sub.name}</Link>,
     }))
   }))
-
-
-  // const items = [
-  //   {
-  //     key: '1',
-  //     label: <a href="/water-color/1">Water Color</a>,
-  //   },
-  //   {
-  //     key: '2',
-  //     label: <a href="/pen-sketch">Pen Sketch</a>,
-  //     children:[
-  //       {
-  //         key:'1',
-  //         label:'Portrait'
-  //       },
-  //       {
-  //         key:'2',
-  //         label:'Landscape',
-  //         children:[
-  //           {
-  //             key:'1',
-  //             label:'Black',
-  //             children:[
-  //               {
-  //                 key:'1',
-  //                 label:'Dark'
-  //               },
-  //               {
-  //                 key:'2',
-  //                 label:'Light'
-  //               },
-  //             ]
-  //           },
-  //           {
-  //             key:'2',
-  //             label:'Gray'
-  //           },
-  //         ]
-  //       }
-  //     ],
-
-  //   },
-  //   {
-  //     key: '3',
-  //     label:  <a href="/acrilic">Acrilic</a>,
-
-  //   },
-  //   {
-  //     key: '4',
-  //     label: <a href="/charcol">Charcol</a>,
-
-  //   },
-  // ]
-
+  
   return (
     <>
       <div className='flex flex-col min-h-screen '>
@@ -122,46 +69,46 @@ export default function Layout({ children }) {
             open={isSidMenuOpen}
             key={placement}
             styles={{ body: { padding: 0 } }}
+            width={window.innerWidth * 0.8}
           >
             <div className='my-2'>
               <Button onClick={onClose} className='border-none font-bold text-lg'><IoIosArrowBack /> Back</Button>
             </div>
             <div>
-              
-            <header className=' bg-lime-700 w-full  text-white text-xl'>
-            <nav className='p-2 font-cursive'>
-              <div className='border-b border-white py-1'>
-              <Link className='hover:text-purple-200' href="/">Home</Link>
-              </div>
-              <div className='border-b border-white py-1'>
-              <Link className='hover:text-purple-200' href="#">About</Link>
-              </div>
-              <div className='border-b border-white py-1'>
-              <Link className='hover:text-purple-200' href="#">Contact</Link>
-              </div>
-            <div className='border-b border-white py-1'>
-            <Link className='hover:text-purple-200' href="/blog-list">Blog</Link>
-            </div>
-              <div className='flex justify-center items-center border-b border-white py-1' >
-                <Dropdown menu={{ items, }}>
-                  <a href='#' onClick={(e) => e.preventDefault()} className='w-full flex justify-between items-center'>
-                    <Space>
-                      Category
-                    </Space>
-                    <FaChevronDown className='p-1 mx-1' />
-                  </a>
-                </Dropdown>
-              </div>
-              <div className='border-b border-white py-1'>
-              <Link className='hover:text-purple-200' href="/blogs/create">Create</Link>
-              </div>
-          <div className='py-4'>
-          <Link className='hover:text-purple-200' href='/login'>
-                <button className='bg-purple-400 px-3 rounded-md shadow-md text-base hover:bg-purple-500 py-0.5'>Login</button>
-                </Link>
-          </div>
-            </nav>
-          </header>
+              <header className=' bg-lime-700 w-full  text-white text-xl'>
+                <nav className='p-2 font-cursive'>
+                  <div className='border-b border-white py-1'>
+                    <Link className='hover:text-purple-200' href="/">Home</Link>
+                  </div>
+                  <div className='border-b border-white py-1'>
+                    <Link className='hover:text-purple-200' href="#">About</Link>
+                  </div>
+                  <div className='border-b border-white py-1'>
+                    <Link className='hover:text-purple-200' href="#">Contact</Link>
+                  </div>
+                  <div className='border-b border-white py-1'>
+                    <Link className='hover:text-purple-200' href="/blog-list">Blog</Link>
+                  </div>
+                  <div className='flex justify-center items-center border-b border-white py-1' >
+                    <Dropdown menu={{ items, }}>
+                      <a href='#' onClick={(e) => e.preventDefault()} className='w-full flex justify-between items-center'>
+                        <Space>
+                          Category
+                        </Space>
+                        <FaChevronDown className='p-1 mx-1' />
+                      </a>
+                    </Dropdown>
+                  </div>
+                  <div className='border-b border-white py-1'>
+                    <Link className='hover:text-purple-200' href="/blogs/create">Create</Link>
+                  </div>
+                  <div className='py-4'>
+                    <Link className='hover:text-purple-200' href='/login'>
+                      <button className='bg-purple-400 px-3 rounded-md shadow-md text-base hover:bg-purple-500 py-0.5'>Login</button>
+                    </Link>
+                  </div>
+                </nav>
+              </header>
             </div>
           </Drawer>
         </div>
@@ -169,9 +116,9 @@ export default function Layout({ children }) {
           {children}
         </main>
         <footer className="flex justify-center items-center h-20 bg-gray-800 text-white text-sm">
-          <div className="w-[80%] flex justify-between items-center">
-            <p>© {new Date().getFullYear()} Your Company. All rights reserved.</p>
-            <nav className="flex space-x-4">
+          <div className="w-full md:w-[80%] block md:flex md:justify-between items-center justify-center px-2">
+            <p className='text-center'>© {new Date().getFullYear()} Your Company. All rights reserved.</p>
+            <nav className="flex space-x-4 justify-center pt-2">
               <Link className="hover:text-gray-400" href="/">Privacy Policy</Link>
               <Link className="hover:text-gray-400" href="#">Terms of Service</Link>
             </nav>

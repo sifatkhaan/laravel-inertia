@@ -1,4 +1,5 @@
 import { router } from '@inertiajs/react';
+import { Image } from 'antd';
 import axios from 'axios';
 import React, { useState } from 'react'
 
@@ -35,37 +36,38 @@ function SellItem({ item }) {
     }
     return (
         <div className='flex w-full justify-center '>
-            <div className='w-[80%] bg-[#fff6f6e6] py-5 px-2'>
-                <div className='flex w-full gap-3'>
-                    <div className='w-2/3 gap-3 justify-between items-center' >
+            <div className='w-full md:w-[80%] bg-[#fff6f6e6] py-2 md:py-5 px-2'>
+                <div className='md:flex w-full gap-3'>
+                    <div className='w-full md:w-2/3 gap-3 justify-between items-center min-h-[50vh]' >
                         <div className='grid grid-cols-3 w-full justify-between items-center p-2 bg-lime-100 font-bold'>
                             <h2 className='text-left'>Item</h2>
                             <h2 className='text-left'>Item Name</h2>
                             <h2 className='text-left '>Quantity</h2>
                         </div>
                         <div className='grid grid-cols-3 w-full justify-between items-center py-3'>
-                            <div>
-                                <img
+                            <div className='w-20 md:w-32'>
+                                <Image
                                     src={item.image}
                                     alt=""
-                                    className=" w-24 object-cover rounded-sm"
+                                    // width={90}
+                                    className="object-cover rounded-sm"
                                 />
                             </div>
                             <div>
                                 <h2>{item.name}</h2>
                             </div>
-                            <div className='w-1/3'>
+                            <div className='flex w-auto md:w-1/3'>
                                 <input
                                     type="number"
                                     min="1"
                                     value={quantity}
                                     onChange={(e) => setQuantity(parseInt(e.target.value))}
-                                    className="border p-2"
+                                    className="md:max-w-full max-w-[90px] border p-2"
                                 />
                             </div>
                         </div>
                     </div>
-                    <div className='w-1/3 border border-lime-600 p-1  '>
+                    <div className='w-full md:w-1/3 border border-lime-600 p-1  '>
 
                         <div className=' w-full'>
                             <div>
