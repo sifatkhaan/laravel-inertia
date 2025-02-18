@@ -12,6 +12,7 @@ class Item extends Model
         'name',
         'price',
         'image',
+        'video',
         'description',
         'category_id',
         'subcategory_id',

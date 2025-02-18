@@ -11,6 +11,7 @@ export default function Layout({ children }) {
   const [placement, setPlacement] = useState('right');
   const [isSidMenuOpen, setIsSideMenuOpen] = useState(false);
 
+
   useEffect(() => {
     setIsMounted(true);
   }, []);
@@ -23,6 +24,8 @@ export default function Layout({ children }) {
   };
 
   const { categories } = usePage().props
+  const { auth } = usePage().props;
+
   const items = categories.map((category) => ({
     key: category.id,
     label: <Link href={`/category/${category.id}`}>{category.name}</Link>,
@@ -31,7 +34,7 @@ export default function Layout({ children }) {
       label: <Link href={`/category/${category.id}?sub=${sub.id}`}>{sub.name}</Link>,
     }))
   }))
-  
+
   return (
     <>
       <div className='flex flex-col min-h-screen '>
@@ -53,8 +56,20 @@ export default function Layout({ children }) {
                 </Dropdown>
               </div>
               <Link className='hover:text-purple-200' href="/blogs/create">Create</Link>
-              <Link className='hover:text-purple-200' href='/login'>
-                <button className='bg-purple-400 px-3 rounded-md shadow-md text-base hover:bg-purple-500 py-0.5'>Login</button></Link>
+              {auth?.user ? (
+                <Link className="hover:text-purple-200" href="/admin/dashboard">
+                  <button className="bg-purple-400 px-3 rounded-md shadow-md text-base hover:bg-purple-500 py-0.5">
+                    Admin
+                  </button>
+                </Link>
+
+              ) : (
+                <Link className="hover:text-purple-200" href="/login">
+                  <button className="bg-purple-400 px-3 rounded-md shadow-md text-base hover:bg-purple-500 py-0.5">
+                    Login
+                  </button>
+                </Link>
+              )}
             </nav>
           </header>
 
@@ -103,9 +118,20 @@ export default function Layout({ children }) {
                     <Link className='hover:text-purple-200' href="/blogs/create">Create</Link>
                   </div>
                   <div className='py-4'>
-                    <Link className='hover:text-purple-200' href='/login'>
-                      <button className='bg-purple-400 px-3 rounded-md shadow-md text-base hover:bg-purple-500 py-0.5'>Login</button>
-                    </Link>
+                    {auth?.user ? (
+                      <Link className="hover:text-purple-200" href="/admin/dashboard">
+                        <button className="bg-purple-400 px-3 rounded-md shadow-md text-base hover:bg-purple-500 py-0.5">
+                          Admin
+                        </button>
+                      </Link>
+
+                    ) : (
+                      <Link className="hover:text-purple-200" href="/login">
+                        <button className="bg-purple-400 px-3 rounded-md shadow-md text-base hover:bg-purple-500 py-0.5">
+                          Login
+                        </button>
+                      </Link>
+                    )}
                   </div>
                 </nav>
               </header>

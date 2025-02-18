@@ -5,7 +5,7 @@ const { TextArea } = Input;
 
 export default function Create() {
 
-    console.log(usePage())
+
     const { data, setData, post, errors, processing } = useForm({
         title: "",
         image: null,
@@ -35,7 +35,8 @@ export default function Create() {
                             )}
                             <form onSubmit={onSubmit} className='block'>
                                 <div>
-                                    <Input type="text"
+                                    <Input
+                                        type="text"
                                         className='border border-gray-700'
                                         value={data.title}
                                         onChange={(e) => setData('title', e.target.value)}

@@ -7,10 +7,9 @@ import {
   UserOutlined,
   VideoCameraOutlined,
 } from '@ant-design/icons';
-import { router, usePage } from "@inertiajs/react";
+import { Link, router, usePage } from "@inertiajs/react";
 import { Avatar, Button, Dropdown, Layout, Menu, theme } from 'antd';
 const { Header, Sider, Content } = Layout;
-
 
 function AdminLayout({children}) {
   const {auth} = usePage().props
@@ -52,7 +51,7 @@ function AdminLayout({children}) {
             {
               key: '2',
               icon: <VideoCameraOutlined />,
-              label: 'nav 2',
+              label: <Link href='/admin/item/create'>Items</Link>,
             },
             {
               key: '3',
@@ -70,12 +69,12 @@ function AdminLayout({children}) {
             onClick={() => setCollapsed(!collapsed)}
             style={{
               fontSize: '16px',
-              width: 64,
-              height: 64,
+              width: 74,
+              height: 74,
             }}
             className='text-white'
           /> 
-          <Dropdown overlay={userMenu} placement="bottomRight">
+          <Dropdown menu={userMenu} placement="bottomRight">
           <Button type="text" className='text-white'>
             <Avatar style={{ backgroundColor: '#87d068', marginRight: 8 }} size="small">
               {auth?.user?.name?.charAt(0).toUpperCase()}
