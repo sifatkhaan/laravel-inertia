@@ -1,4 +1,4 @@
-import { router, useForm } from '@inertiajs/react'
+import { Link, router, useForm } from '@inertiajs/react'
 import { Button, Col, Input, Row, Select, Upload } from 'antd'
 import axios from 'axios';
 import React, { useState } from 'react'
@@ -204,7 +204,11 @@ post("store", {
             /></Col>
         </Row>
         <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }} className='my-4'>
-          <Col span={24} className='flex justify-end'>
+          <Col span={24} className='flex justify-end gap-2'>
+
+          <Link href='/admin/items'>
+          <button className='bg-red-500 px-6 py-2 text-white rounded-md' >Close</button>
+          </Link>
           <button type='submit' className='bg-green-500 px-6 py-2 text-white rounded-md' disabled={processing}>Save</button>
           </Col>
         </Row>

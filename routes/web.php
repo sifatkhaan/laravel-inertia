@@ -29,6 +29,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/dashboard', function () {
         return Inertia::render('Admin/Dashboard');
     })->name('admin.dashboard');
+    Route::get('/admin/items', [ItemController::class, 'adminIndex'])->name('admin.item.index');
     Route::get('/admin/item/create', [ItemController::class, 'create'])->name('admin.item.create');
     Route::post('/admin/item/store', [ItemController::class, 'store'])->name('admin.item.store');
 });

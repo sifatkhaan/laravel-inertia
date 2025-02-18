@@ -29,22 +29,55 @@ class ItemController extends Controller
         return inertia('Category', [
             'items' => $items,
             'category' => $category,
-            'adminItems'=>$allItems,
+            'adminItems' => $allItems,
         ]);
     }
 
-    public function adminIndex(Request $request) {
+    public function adminIndex(Request $request)
+    {
 
-        $query = Item::latest();
+        $query = Item::select(
+            'items.id',
+            'items.name',
+            'items.price',
+            'items.image',
+            'items.description',
+            'items.is_portrait',
+            'categories.name as categoryName',
+            'sub_categories.name as subcategoryName',
+            'authors.name as authorName',
+            'media.name as mediaName',
+            'materials.name as materialsName',
+            'dimensions.width as width',
+            'dimensions.height as height'
+
+        )
+        ->leftJoin('categories', 'categories.id', '=', 'items.category_id')
+        ->leftJoin('sub_categories', 'sub_categories.id', '=', 'items.subcategory_id')
+        ->leftJoin('authors', 'authors.id', '=', 'items.author_id')
+        ->leftJoin('media', 'media.id', '=', 'items.media_id')
+        ->leftJoin('materials', 'materials.id', '=', 'items.material_id')
+        ->leftJoin('dimensions', 'dimensions.id', '=', 'items.dimension_id');
+
+
         if ($request->has('search') && !empty($request->search)) {
-            $query->where('name', 'like', '%' . $request->search . '%');
+            $query->where('items.name', 'like', '%' . $request->search . '%');
         }
-        
+        $sortBy = $request->input('sortBy', 'items.id');
+        $sortOrder = $request->input('sortOrder', 'desc');
+        $validColumns = ['items.id', 'items.name', 'items.price', 'items.created_at'];
+        if (!in_array($sortBy, $validColumns)) {
+            $sortBy = 'items.id';
+        }
+        $query->orderBy($sortBy, $sortOrder);
+
         $allItems = $query->paginate(10);
 
-        return inertia('Admin/ItemDetails/ItemList', [
+        return inertia('Admin/item-details/ItemList', [
             'adminItems' => $allItems,
             'search' => $request->search,
+            'sortBy' => $sortBy,
+            'sortOrder' => $sortOrder,
         ]);
     }
 
