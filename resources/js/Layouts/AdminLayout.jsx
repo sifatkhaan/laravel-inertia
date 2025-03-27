@@ -51,7 +51,7 @@ function AdminLayout({children}) {
             {
               key: '2',
               icon: <VideoCameraOutlined />,
-              label: <Link href='/admin/item/create'>Items</Link>,
+              label: <Link href='/admin/items'>Items</Link>,
             },
             {
               key: '3',

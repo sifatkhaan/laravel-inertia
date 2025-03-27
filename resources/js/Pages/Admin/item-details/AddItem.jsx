@@ -1,11 +1,14 @@
 import { Link, router, useForm } from '@inertiajs/react'
-import { Button, Col, Input, Row, Select, Upload } from 'antd'
+import { Button, Col, Input, Progress, Radio, Row, Select, Upload } from 'antd'
 import axios from 'axios';
+import { UploadOutlined } from "@ant-design/icons";
 import React, { useState } from 'react'
 // import route from 'vendor/tightenco/ziggy/src/js';
 const { TextArea } = Input;
 
 function AddItem({ categories, dimensions, authors, materials, media }) {
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const [uploading, setUploading] = useState(false);
   const [fileList, setFileList] = useState([]);
   const [image, setImage] = useState(null);
   const { data, setData, post, errors, processing } = useForm({
@@ -14,8 +17,8 @@ function AddItem({ categories, dimensions, authors, materials, media }) {
     price: 0,
     description: '',
     category_id: null,
-    is_portrait: "0",
-    video: '',
+    is_portrait: 0,
+    video: null,
     subcategory_id: null,
     media_id: null,
     material_id: null,
@@ -32,7 +35,7 @@ function AddItem({ categories, dimensions, authors, materials, media }) {
   const handleChange = ({ fileList }) => {
     const latestFile = fileList.slice(-1)[0];
     setFileList(fileList.slice(-1));
-    setData('image',latestFile?.originFileObj || null);
+    setData('image', latestFile?.originFileObj || null);
   };
 
   const customRequest = (options) => {
@@ -41,20 +44,62 @@ function AddItem({ categories, dimensions, authors, materials, media }) {
     }, 1000);
   };
 
+  const onFileChange = (info) => {
+    if (info.fileList.length > 0) {
+      setData('video', info.fileList.slice(-1)[0].originFileObj);
+    } else {
+      setData('video', null);
+    }
+  };
+  const handleVideoUpload = async ({ file }) => {
+    const formData = new FormData();
+    formData.append("video", file);
+    console.log(file, 'file')
+
+    try {
+      setUploading(true); 
+      setUploadProgress(0);
+
+        const res = await axios.post("/admin/item/upload-video", formData, {
+            headers: { "Content-Type": "multipart/form-data" },
+            onUploadProgress: (progressEvent) => {
+                const percent = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+                setUploadProgress(percent)
+            }
+        });
+
+        setData("video", res.data.url); 
+        setUploading(false);
+        return res.data.url;
+    } catch (error) {
+        console.error("Video upload failed", error);
+        setUploading(false);
+        return null; 
+    }
+};
+
+
+
+
   function onSubmit(e) {
     e.preventDefault()
     const formData = new FormData();
     Object.keys(data).forEach((key) => {
-        if (data[key] !== null) {
-            formData.append(key, data[key]);
-        }
+      if (data[key] !== null) {
+        formData.append(key, data[key]);
+      }
     });
 
-post("store", {
-    data: formData,
-    forceFormData: true,
-});
-}
+    console.log([...formData]);
+
+    post("store", {
+      data: formData,
+      headers: { "Content-Type": "multipart/form-data" },
+      onProgress: (progress) => {
+        console.log("Upload progress:", progress);
+      },
+    });
+  }
 
   return (
     <div>
@@ -149,7 +194,7 @@ post("store", {
             />
           </Col>
           <Col span={6}>
-          <Select
+            <Select
               showSearch
               type="text"
               className='w-full'
@@ -165,7 +210,7 @@ post("store", {
             />
           </Col>
           <Col span={6}>
-          <Select
+            <Select
               showSearch
               type="text"
               className='w-full'
@@ -201,15 +246,40 @@ post("store", {
               value={data.description}
               onChange={(e) => setData('description', e.target.value)}
               placeholder='Enter Description'
-            /></Col>
+            />
+          </Col>
+          <Col span={6}>
+            <Radio.Group
+              onChange={(e) => setData('is_portrait', e.target.value)}
+              value={data.is_portrait}
+            >
+              <Radio value={0}>Landscape</Radio>
+              <Radio value={1}>Portrait</Radio>
+            </Radio.Group>
+          </Col>
+          <Col span={6}>
+            <Upload
+              // listType="picture-card"
+              beforeUpload={() => false} // Prevent default upload
+              onChange={handleVideoUpload}
+              maxCount={1}
+              accept="video/*"
+            >
+              <Button icon={<UploadOutlined />}>
+              {uploading ? "Uploading..." : "Upload Video"}
+              </Button>
+            </Upload>
+            {uploading && (
+                <Progress percent={uploadProgress} status={uploadProgress === 100 ? "success" : "active"} />
+            )}
+          </Col>
         </Row>
         <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }} className='my-4'>
           <Col span={24} className='flex justify-end gap-2'>
-
-          <Link href='/admin/items'>
-          <button className='bg-red-500 px-6 py-2 text-white rounded-md' >Close</button>
-          </Link>
-          <button type='submit' className='bg-green-500 px-6 py-2 text-white rounded-md' disabled={processing}>Save</button>
+            <Link href='/admin/items'>
+              <button className='bg-red-500 px-6 py-2 text-white rounded-md' >Close</button>
+            </Link>
+            <button type='submit' className='bg-green-500 px-6 py-2 text-white rounded-md' disabled={processing}>Save</button>
           </Col>
         </Row>
       </form>

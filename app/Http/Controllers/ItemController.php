@@ -12,15 +12,18 @@ use App\Models\SubCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
-
+use App\Jobs\ProcessVideo;
+use App\Services\ItemService;
 
 class ItemController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    protected $itemService;
+
+    public function __construct(ItemService $itemService)
+    {
+        $this->itemService = $itemService;
+    }
+
     public function index($categoryId)
     {
         $category = category::with('items')->findOrFail($categoryId);
@@ -52,12 +55,12 @@ class ItemController extends Controller
             'dimensions.height as height'
 
         )
-        ->leftJoin('categories', 'categories.id', '=', 'items.category_id')
-        ->leftJoin('sub_categories', 'sub_categories.id', '=', 'items.subcategory_id')
-        ->leftJoin('authors', 'authors.id', '=', 'items.author_id')
-        ->leftJoin('media', 'media.id', '=', 'items.media_id')
-        ->leftJoin('materials', 'materials.id', '=', 'items.material_id')
-        ->leftJoin('dimensions', 'dimensions.id', '=', 'items.dimension_id');
+            ->leftJoin('categories', 'categories.id', '=', 'items.category_id')
+            ->leftJoin('sub_categories', 'sub_categories.id', '=', 'items.subcategory_id')
+            ->leftJoin('authors', 'authors.id', '=', 'items.author_id')
+            ->leftJoin('media', 'media.id', '=', 'items.media_id')
+            ->leftJoin('materials', 'materials.id', '=', 'items.material_id')
+            ->leftJoin('dimensions', 'dimensions.id', '=', 'items.dimension_id');
 
 
         if ($request->has('search') && !empty($request->search)) {
@@ -98,47 +101,46 @@ class ItemController extends Controller
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'price' => 'required|numeric|min:0',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:6048',
-            'description' => 'required|string',
-            'category_id' => 'required|exists:categories,id',
-            'is_portrait' => 'required|boolean',
-            'video' => 'nullable|string|max:255',
-            'subcategory_id' => 'nullable|exists:sub_categories,id',
-            'media_id' => 'nullable|exists:media,id',
-            'material_id' => 'nullable|exists:materials,id',
-            'dimension_id' => 'nullable|exists:dimensions,id',
-            'author_id' => 'nullable|exists:authors,id',
-        ]);
+        // $validated = $request->validate([
+        //     'name' => 'required|string|max:255',
+        //     'price' => 'required|numeric|min:0',
+        //     'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:6048',
+        //     'description' => 'required|string',
+        //     'category_id' => 'required|exists:categories,id',
+        //     'is_portrait' => 'required|boolean',
+        //     'video' => 'nullable|string',
+        //     'subcategory_id' => 'nullable|exists:sub_categories,id',
+        //     'media_id' => 'nullable|exists:media,id',
+        //     'material_id' => 'nullable|exists:materials,id',
+        //     'dimension_id' => 'nullable|exists:dimensions,id',
+        //     'author_id' => 'nullable|exists:authors,id',
+        // ]);
 
-        $categoryName = category::where('id', $request->category_id)->value('name');
+        // $categoryName = category::where('id', $request->category_id)->value('name');
 
-        if ($categoryName === 'Pen Sketch') {
-            $folderPath = '/images/art/sketch';
-        } elseif ($categoryName === 'Water Color') {
-            $folderPath = '/images/art/water-color';
-        } else {
-            $folderPath = '/images/random';
-        }
+        // $folderPath = match ($categoryName) {
+        //     'Pen Sketch' => '/images/art/sketch',
+        //     'Water Color' => '/images/art/water-color',
+        //     default => '/images/random',
+        // };
 
-        // if (!Storage::disk('public')->exists($folderPath)) {
-        //     Storage::disk('public')->makeDirectory($folderPath);
+        // if ($request->hasFile('image')) {
+        //     $fileName = time() . '_' . $request->file('image')->getClientOriginalName();
+        //     $validated['image'] = $request->file('image')->storeAs($folderPath, $fileName, 'public');
         // }
 
-        if ($request->hasFile('image')) {
-            $fileName = time() . '_' . $request->file('image')->getClientOriginalName();
-            $validated['image'] = $request->file('image')->storeAs($folderPath, $fileName, 'public');
-        }
-        if ($request->hasFile('video')) {
-            $fileName = time() . '_' . $request->file('video')->getClientOriginalName();
-            $validated['video'] = $request->file('video')->storeAs('/videoes/random', $fileName, 'public');
-        }
+        // Item::create($validated);
 
-        Item::create($validated);
+        // return redirect()->route('admin.item.create')->with('success', 'Item created successfully.');
 
-        return redirect()->route('admin.item.create')->with('success', 'Item created successfully.');
+        $this->itemService->storeItem($request);
+        return redirect()->back()->with('success', 'Data saved successfully.');
+    }
+
+    public function uploadVideo(Request $request)
+    {
+        $videoUrl = $this->itemService->uploadVideo($request);
+        return response()->json(['url' => $videoUrl]);
     }
 
 
